@@ -28,8 +28,8 @@ public class GroundTile : MonoBehaviour
 
     void SpawnObstacle()
     {
-        //int obstacleSpawnIndex = Random.Range(2, 5);
-        Transform spawnPoint = transform.GetChild(3).transform;
+        int obstacleSpawnIndex = Random.Range(2, 4);
+        Transform spawnPoint = transform.GetChild(obstacleSpawnIndex).transform;
 
         Instantiate(obstaclePrefab, spawnPoint.position, Quaternion.identity, transform);
     }
@@ -38,7 +38,7 @@ public class GroundTile : MonoBehaviour
 
     void SpawnCoins()
     {
-        int coinsToSpawn = 6;
+        int coinsToSpawn = 12;
 
         for(int i = 0; i < coinsToSpawn; i++)
         {

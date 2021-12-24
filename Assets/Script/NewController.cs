@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 [RequireComponent(typeof(Collider))]
 [RequireComponent(typeof(Rigidbody))]
@@ -10,10 +11,15 @@ using UnityEngine.SceneManagement;
 public class NewController : MonoBehaviour
 
 {
+    
+
+    public Text timeSec;
+    public Text timeMin;
 
     public Vector3 MovingDirection;
     public float JumpingForce;
-    [SerializeField] float movingSpeed = 10f;
+    
+    public static float movingSpeed = 10f;
 
     Rigidbody rb;
 
@@ -25,7 +31,7 @@ public class NewController : MonoBehaviour
     bool onGround = true, run = false;
     bool jump = false;
     bool isFall = false;
-
+    
 
     //rotate
     float rotateRate;
@@ -40,11 +46,15 @@ public class NewController : MonoBehaviour
     public Transform GroundCheck;
     public float groundDistance = 0.4f;
     public LayerMask groundMask;
-    bool isGrounded;
+    public bool isGrounded;
 
     //Jump
     //float jumpForce;
     //public float gravityScale = 5;
+
+    //clock
+    float sec=0;
+    float min=0;
     void Start()
     {
        
@@ -57,12 +67,15 @@ public class NewController : MonoBehaviour
     {
         Vector3 forwardMove = transform.forward * movingSpeed * Time.deltaTime;
         Vector3 horizontalMove = transform.right * horizontalInput * movingSpeed * Time.deltaTime * horizontalMultiplier;
-        rb.MovePosition(rb.position + forwardMove + horizontalMove);
+        if (alive)
+        {
+            rb.MovePosition(rb.position + forwardMove + horizontalMove);
+        }
     }
     public void Die()
     {
         alive = false;
-
+        
         Invoke("Restart", 2);
     }
     void Restart()
@@ -72,23 +85,14 @@ public class NewController : MonoBehaviour
     }
     void Update()
     {
-        if (!alive) return;
+        
+       // if (!alive) return;
         horizontalInput = Input.GetAxis("Horizontal");
 
         if (transform.position.y < -5)
         {
             Die();
         }
-
-        if (!isFall && !jump)
-        {
-            run = true;
-        }else
-        {
-            run = false;
-
-        }
-        //transform.position += movingSpeed * Time.deltaTime * transform.forward;
         
         if (Input.GetKeyDown(KeyCode.Q))
         {
@@ -119,27 +123,35 @@ public class NewController : MonoBehaviour
           
         }
         isGrounded = Physics.CheckSphere(GroundCheck.position, groundDistance, groundMask);
-
-        if (Input.GetButton("Jump") && isGrounded)
+        if(isGrounded)
         {
-            jump = true;
-            rb.AddForce(JumpingForce * Time.deltaTime * Vector3.up);
-            
+            jump = false;
+            run = true;
         }
-        if(rb.velocity.y < 0 && !isGrounded)
+        else
         {
             run = false;
-            isFall = true;
-            jump = false;
+            jump = true;
         }
-        if (isGrounded)
+        if(Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
-            isFall = false;
+            //Debug.Log("Jumping");
+            jump = true;
+            rb.AddForce(JumpingForce * Vector3.up);
+            
         }
-        
-         animator.SetBool("Run", run);
-         animator.SetBool("Jump", jump);
-        animator.SetBool("isFall", isFall);
+        animator.SetBool("Die", alive);
+        animator.SetBool("Run", run);
+        animator.SetBool("Jump", jump);
+
+        sec += Time.deltaTime;
+        timeSec.text = ((int)sec).ToString();
+        timeMin.text = min.ToString();
+        if (sec >= 60)
+        {
+            min++;
+            sec = 0;
+        }
     }
     }
     
