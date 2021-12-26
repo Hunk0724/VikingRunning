@@ -52,15 +52,15 @@ public class createLand : MonoBehaviour
     }
     private void Start()
     {
-        for(int i = 0; i < 10; i++)
+        for(int i = 0; i < 6; i++)
         {
-            if (i < 5)
+            if (i < 3)
             {
                 temp = Instantiate(lands[1], nextSpawnPoint, Quaternion.identity);
                 nextSpawnPoint = temp.transform.GetChild(2).transform.position;
             }
             SpawnTile();
-            if (i > 6)
+            if (i > 4)
             {
                 temp = Instantiate(lands[1], nextSpawnPoint, Quaternion.identity);
                 nextSpawnPoint = temp.transform.GetChild(2).transform.position;
