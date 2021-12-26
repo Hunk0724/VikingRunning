@@ -11,11 +11,12 @@ using UnityEngine.SceneManagement;
 public class NewController : MonoBehaviour
 
 {
-    
+    public GameObject SceneGameOver;
 
     public Text timeSec;
     public Text timeMin;
-
+    public Text Score;
+    
     public Vector3 MovingDirection;
     public float JumpingForce;
     
@@ -25,7 +26,7 @@ public class NewController : MonoBehaviour
 
     float horizontalInput;
     public float horizontalMultiplier = 2;
-    bool alive = true;
+     bool alive = true;
     //animator
     Animator animator;
     bool onGround = true, run = false;
@@ -55,9 +56,12 @@ public class NewController : MonoBehaviour
     //clock
     float sec=0;
     float min=0;
+    float score = 0;
     void Start()
     {
        
+        SceneGameOver = GameObject.Find("GameOver");
+        SceneGameOver.gameObject.SetActive(false);
         rotateRate = 1 / rotateDuration;
         rb = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
@@ -74,9 +78,10 @@ public class NewController : MonoBehaviour
     }
     public void Die()
     {
+        SceneGameOver.gameObject.SetActive(true);
         alive = false;
-        
-        Invoke("Restart", 2);
+        score = (float)((min * 60 + sec) * 1.5 + GameManager.score);
+        Score.text = ((int)score).ToString();
     }
     void Restart()
     {
@@ -143,14 +148,16 @@ public class NewController : MonoBehaviour
         animator.SetBool("Die", alive);
         animator.SetBool("Run", run);
         animator.SetBool("Jump", jump);
-
-        sec += Time.deltaTime;
-        timeSec.text = ((int)sec).ToString();
-        timeMin.text = min.ToString();
-        if (sec >= 60)
+        if (alive)
         {
-            min++;
-            sec = 0;
+            sec += Time.deltaTime;
+            timeSec.text = ((int)sec).ToString();
+            timeMin.text = min.ToString();
+            if (sec >= 60)
+            {
+                min++;
+                sec = 0;
+            }
         }
     }
     }

@@ -31,36 +31,18 @@ public class createLand : MonoBehaviour
                 nextSpawnPoint = temp.transform.GetChild(2).transform.position;
                 break;
         }
-        
-        //if (Random.Range(0, 100) <=50)
-        //{
-        //   angle += 90;
-        //}else 
-        //{
-        //    angle -= 90;
-        //}
-        //if (Random.Range(0, 100) <= 50)
-        //{
-        //    //temp = Instantiate(groundTileHole, nextSpawnPoint, Quaternion.Euler(0, angle, 0));
-        //    temp = Instantiate(groundTileHole, nextSpawnPoint, Quaternion.identity);
-        //}else
-        //{
-        //    //temp = Instantiate(groundTile, nextSpawnPoint, Quaternion.Euler(0, angle, 0));
-        //    temp = Instantiate(groundTile, nextSpawnPoint, Quaternion.identity);
-        //}
-
     }
     private void Start()
     {
-        for(int i = 0; i < 6; i++)
+        for(int i = 0; i < 5; i++)
         {
-            if (i < 3)
+            if (i < 2)
             {
                 temp = Instantiate(lands[1], nextSpawnPoint, Quaternion.identity);
                 nextSpawnPoint = temp.transform.GetChild(2).transform.position;
             }
             SpawnTile();
-            if (i > 4)
+            if (i > 3)
             {
                 temp = Instantiate(lands[1], nextSpawnPoint, Quaternion.identity);
                 nextSpawnPoint = temp.transform.GetChild(2).transform.position;

@@ -19,7 +19,7 @@ public class sensor : MonoBehaviour
 
         if(collider.transform.name == "viking")
         {
-            Debug.Log("viking enter");
+            
         }
     }
 }
