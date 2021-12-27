@@ -38,7 +38,7 @@ public class GroundTile : MonoBehaviour
 
     void SpawnCoins()
     {
-        int coinsToSpawn = 12;
+        int coinsToSpawn = 8;
 
         for(int i = 0; i < coinsToSpawn; i++)
         {

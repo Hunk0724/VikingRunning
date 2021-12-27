@@ -59,7 +59,10 @@ public class NewController : MonoBehaviour
     float score = 0;
     void Start()
     {
-       
+        sec = 0;
+         min = 0;
+         score = 0;
+        movingSpeed = 10f;
         SceneGameOver = GameObject.Find("GameOver");
         SceneGameOver.gameObject.SetActive(false);
         rotateRate = 1 / rotateDuration;
@@ -80,7 +83,7 @@ public class NewController : MonoBehaviour
     {
         SceneGameOver.gameObject.SetActive(true);
         alive = false;
-        score = (float)((min * 60 + sec) * 1.5 + GameManager.score);
+        score = (float)((min * 60 + sec) * 2 + GameManager.score);
         Score.text = ((int)score).ToString();
     }
     void Restart()

@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour
     {
         score++;
         scoreText.text = score.ToString();
-        NewController.movingSpeed += (float)(GameManager.score * 0.001);
+        NewController.movingSpeed += (float)(GameManager.score * 0.002);
     }
 
     private void Awake()
@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviour
     }
     void Start()
     {
-        
+        score = 0;
     }
 
     // Update is called once per frame
